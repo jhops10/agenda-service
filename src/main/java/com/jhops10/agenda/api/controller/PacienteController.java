@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/paciente")
@@ -29,4 +30,38 @@ public class PacienteController {
         List<Paciente> pacientes = pacienteService.listarTodos();
         return ResponseEntity.status(HttpStatus.OK).body(pacientes);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> buscarPorId(@PathVariable("id") Long id) {
+        Optional<Paciente> optPaciente = pacienteService.buscarPorId(id);
+
+        if (optPaciente.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(optPaciente.get());
+    }
+
+    @PutMapping
+    public ResponseEntity<Paciente> atualizarPaciente(@RequestBody Paciente paciente) {
+        Paciente pacienteAtualizado = pacienteService.salvar(paciente);
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteAtualizado);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable("id") Long id) {
+        Optional<Paciente> optPaciente = pacienteService.buscarPorId(id);
+
+        if (optPaciente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        pacienteService.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+
+
 }
