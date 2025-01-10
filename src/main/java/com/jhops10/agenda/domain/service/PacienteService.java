@@ -2,6 +2,7 @@ package com.jhops10.agenda.domain.service;
 
 import com.jhops10.agenda.domain.entity.Paciente;
 import com.jhops10.agenda.domain.repository.PacienteRepository;
+import com.jhops10.agenda.exception.BusinessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +20,22 @@ public class PacienteService {
     }
 
     public Paciente salvar(Paciente paciente) {
+        boolean existeCpf = false;
+        Optional<Paciente> optPaciente = pacienteRepository.findByCpf(paciente.getCpf());
 
-        //TODO: validar se cpf ja nao existe.
+        if (optPaciente.isPresent()) {
+            if (!optPaciente.get().getId().equals(paciente.getId())) {
+                existeCpf = true;
+            }
+        }
+
+        if (existeCpf) {
+            throw new BusinessException("CPF Já Cadastrado");
+        }
 
         return pacienteRepository.save(paciente);
     }
+
 
     public List<Paciente> listarTodos() {
         return pacienteRepository.findAll();
