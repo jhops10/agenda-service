@@ -1,5 +1,8 @@
 package com.jhops10.agenda.api.controller;
 
+import com.jhops10.agenda.api.mapper.PacienteMapper;
+import com.jhops10.agenda.api.request.PacienteRequestDTO;
+import com.jhops10.agenda.api.response.PacienteResponseDTO;
 import com.jhops10.agenda.domain.entity.Paciente;
 import com.jhops10.agenda.domain.service.PacienteService;
 import org.springframework.http.HttpStatus;
@@ -20,15 +23,18 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Paciente> salvar(@RequestBody Paciente paciente) {
+    public ResponseEntity<PacienteResponseDTO> salvar(@RequestBody PacienteRequestDTO pacienteRequestDTO) {
+        Paciente paciente = PacienteMapper.toPaciente(pacienteRequestDTO);
         Paciente pacienteSalvo = pacienteService.salvar(paciente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
+        PacienteResponseDTO pacienteResponseDTO = PacienteMapper.toPacienteResponseDTO(pacienteSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteResponseDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> listarTodos() {
+    public ResponseEntity<List<PacienteResponseDTO>> listarTodos() {
         List<Paciente> pacientes = pacienteService.listarTodos();
-        return ResponseEntity.status(HttpStatus.OK).body(pacientes);
+        List<PacienteResponseDTO> pacientesDTO = pacientes.stream().map(paciente -> PacienteMapper.toPacienteResponseDTO(paciente)).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(pacientesDTO);
     }
 
     @GetMapping("/{id}")
