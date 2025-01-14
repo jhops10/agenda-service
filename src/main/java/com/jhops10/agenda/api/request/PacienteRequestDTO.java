@@ -1,10 +1,19 @@
 package com.jhops10.agenda.api.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class PacienteRequestDTO {
 
+    @NotBlank(message = "Nome do paciente é obrigatório")
     private String nome;
+
+    @NotBlank(message = "Sobrenome do paciente é obrigatório")
     private String sobrenome;
+
+    @NotBlank(message = "CPF do paciente é obrigatório")
     private String cpf;
+
+
     private String email;
 
     public PacienteRequestDTO() {

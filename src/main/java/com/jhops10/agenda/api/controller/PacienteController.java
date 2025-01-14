@@ -5,6 +5,7 @@ import com.jhops10.agenda.api.request.PacienteRequestDTO;
 import com.jhops10.agenda.api.response.PacienteResponseDTO;
 import com.jhops10.agenda.domain.entity.Paciente;
 import com.jhops10.agenda.domain.service.PacienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<PacienteResponseDTO> salvar(@RequestBody PacienteRequestDTO pacienteRequestDTO) {
+    public ResponseEntity<PacienteResponseDTO> salvar(@Valid @RequestBody PacienteRequestDTO pacienteRequestDTO) {
         Paciente paciente = pacienteMapper.toPaciente(pacienteRequestDTO);
         Paciente pacienteSalvo = pacienteService.salvar(paciente);
         PacienteResponseDTO pacienteResponseDTO = pacienteMapper.toPacienteResponseDTO(pacienteSalvo);
