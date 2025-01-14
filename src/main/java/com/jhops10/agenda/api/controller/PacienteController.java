@@ -51,10 +51,10 @@ public class PacienteController {
         return ResponseEntity.ok().body(pacienteResponseDTO);
     }
 
-    @PutMapping
-    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@RequestBody PacienteRequestDTO pacienteRequestDTO) {
+    @PutMapping("/{id}")
+    public ResponseEntity<PacienteResponseDTO> atualizarPaciente(@PathVariable("id") Long id, @RequestBody PacienteRequestDTO pacienteRequestDTO) {
         Paciente paciente = pacienteMapper.toPaciente(pacienteRequestDTO);
-        Paciente pacienteAtualizado = pacienteService.salvar(paciente);
+        Paciente pacienteAtualizado = pacienteService.alterar(id, paciente);
         PacienteResponseDTO pacienteResponseDTO = pacienteMapper.toPacienteResponseDTO(pacienteAtualizado);
         return ResponseEntity.ok().body(pacienteResponseDTO);
     }
