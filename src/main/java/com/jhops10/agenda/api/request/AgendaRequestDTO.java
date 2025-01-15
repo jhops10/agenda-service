@@ -3,6 +3,7 @@ package com.jhops10.agenda.api.request;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ public class AgendaRequestDTO {
 
     @NotNull
     @Future
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     private LocalDateTime dataHora;
 
     @NotNull

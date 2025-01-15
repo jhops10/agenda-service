@@ -13,11 +13,15 @@ public class Agenda {
     private Long id;
 
     private String descricao;
+
+
     private LocalDateTime dataHora;
     private LocalDateTime dataCriacao;
 
     @ManyToOne
     private Paciente paciente;
+
+
 
     public Long getId() {
         return id;

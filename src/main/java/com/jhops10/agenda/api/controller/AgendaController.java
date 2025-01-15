@@ -5,6 +5,7 @@ import com.jhops10.agenda.api.request.AgendaRequestDTO;
 import com.jhops10.agenda.api.response.AgendaResponseDTO;
 import com.jhops10.agenda.domain.entity.Agenda;
 import com.jhops10.agenda.domain.service.AgendaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class AgendaController {
     }
 
     @PostMapping
-    public ResponseEntity<AgendaResponseDTO> salvar(@RequestBody AgendaRequestDTO agendaRequestDTO) {
+    public ResponseEntity<AgendaResponseDTO> salvar(@Valid @RequestBody AgendaRequestDTO agendaRequestDTO) {
         Agenda agenda = agendaMapper.toAgenda(agendaRequestDTO);
         Agenda agendaSalvo = agendaService.salvar(agenda);
         AgendaResponseDTO agendaResponseDTO = agendaMapper.toAgendaResponseDTO(agendaSalvo);
