@@ -18,11 +18,11 @@ public class PacienteMapper {
     }
 
 
-    public Paciente toPaciente (PacienteRequestDTO requestDTO) {
+    public Paciente toPaciente(PacienteRequestDTO requestDTO) {
         return modelMapper.map(requestDTO, Paciente.class);
     }
 
-    public PacienteResponseDTO toPacienteResponseDTO (Paciente paciente) {
+    public PacienteResponseDTO toPacienteResponseDTO(Paciente paciente) {
         return modelMapper.map(paciente, PacienteResponseDTO.class);
     }
 
